@@ -1,0 +1,27 @@
+{%extends 'exam_tracker/base.html'%}
+{%block content%}
+<a href = "{% url 'exam_tracker:new_submarks' exam.id marks.id %}">Add marks</a>
+<h4>{{exam.exam}} — Subject Breakdown</h4>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>English</th>
+            <th>Maths</th>
+            <th>Reasoning</th>
+            <th>GS</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for sub in submarks %}
+        <tr>
+            <td>{{sub.english}}</td>
+            <td>{{sub.maths}}</td>
+            <td>{{sub.reasoning}}</td>
+            <td>{{sub.general_studies}}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">No subject marks added yet.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content%}

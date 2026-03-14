@@ -1,0 +1,15 @@
+{% extends 'exam_tracker/base.html'%}
+{%block content%}
+<p>Exam = {{exam.exam}}</p>
+<p>
+    <a href = "{% url 'exam_tracker:new_marks' exam.id %}">Add marks</a>
+</p>
+<ul>
+    {% for mark in marks %}
+        <li><a href = "{%url 'exam_tracker:subjects' exam.id mark.id %}">Marks:{{mark.total_marks}}</a></li>
+        <li>Percentile:{{mark.percentile}}</li>
+    {% empty %}   
+        <li>You have not entered the marks yet.</li>
+    {% endfor %}
+</ul>
+{% endblock content %}

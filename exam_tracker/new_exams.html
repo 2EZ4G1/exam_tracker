@@ -1,0 +1,10 @@
+{%extends 'exam_tracker/base.html'%}
+
+{%block content%}
+<p>Add a new exam:</p>
+<form action="{% url 'exam_tracker:new_exams' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_div }}
+    <button name = "submit">Add exam</button>
+</form>
+{% endblock content %}

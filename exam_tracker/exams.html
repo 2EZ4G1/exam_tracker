@@ -1,0 +1,12 @@
+{%extends 'exam_tracker/base.html' %}
+{% block content %}
+<p>Exams</p>
+    <ul>
+        {% for exam in exams %}
+            <li> <a href = "{% url 'exam_tracker:marks' exam.id%}">{{ exam.exam }}</a> </li>
+        {% empty %}
+            <li>No exam have been added yet.</li>
+        {% endfor %}
+    </ul>
+    <a href = "{% url 'exam_tracker:new_exams' %}">Add a new exam</a>
+{% endblock content %}

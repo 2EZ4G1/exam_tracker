@@ -1,0 +1,12 @@
+{% extends 'exam_tracker/base.html' %}
+{% block content %}
+<p>
+    <a href = "{% url 'exam_tracker:marks' exam.id%}">{{exam}}</a>
+</p>
+<p>Add marks:</p>
+<form action="{% url 'exam_tracker:new_marks' exam.id %}" method="post">
+    {% csrf_token %}
+    {{ form.as_div }}
+    <button name='submit'>Add marks</button>
+</form>
+{% endblock content %}
