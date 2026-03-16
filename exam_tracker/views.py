@@ -28,6 +28,8 @@ def marks(request,exam_id):
 @login_required
 def submarks(request,exam_id,marks_id):
     exam = Exam.objects.get(id=exam_id)
+    if exam.owner != request.user:
+        raise Http404
     marks = Marks.objects.get(id=marks_id)
     submarks = marks.subjectmarks_set.all()
     context = {'exam':exam,'marks':marks, 'submarks':submarks}
