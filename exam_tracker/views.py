@@ -25,6 +25,7 @@ def marks(request,exam_id):
     totalmarks = exam.marks_set.order_by('-date_added')
     context = {'exam':exam, 'marks':totalmarks}
     return render(request, 'exam_tracker/marks.html', context)
+
 @login_required
 def submarks(request,exam_id,marks_id):
     exam = Exam.objects.get(id=exam_id)
@@ -34,6 +35,7 @@ def submarks(request,exam_id,marks_id):
     submarks = marks.subjectmarks_set.all()
     context = {'exam':exam,'marks':marks, 'submarks':submarks}
     return render(request, 'exam_tracker/subjects.html',context)
+
 @login_required
 def new_exams(request):
     """Add a new topic."""
@@ -51,9 +53,11 @@ def new_exams(request):
     context = {'form':form}
     return render(request, 'exam_tracker/new_exams.html',context)
 
+@login_required
 def new_marks(request,exam_id):
     exam = Exam.objects.get(id=exam_id)
-
+    if exam.owner != request.user:
+        raise Http404
     if request.method != 'POST':
         form = MarksForm()
 
@@ -67,11 +71,13 @@ def new_marks(request,exam_id):
         
     context = {'exam':exam,'form':form}
     return render(request, 'exam_tracker/new_marks.html',context)
+
 @login_required
 def new_submarks(request,exam_id,marks_id):
     exam = Exam.objects.get(id=exam_id)
     marks = Marks.objects.get(id=marks_id)
-
+    if exam.owner != request.user:
+        raise Http404
     if request.method != 'POST':
         form = SubjectForm()
     else:
